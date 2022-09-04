@@ -414,7 +414,7 @@
                                                     sm="4"
                                                 >
                                                     <v-card
-                                                        :img="encuentroRedis" height="400px"
+                                                        :img="img7_1" height="400px"
                                                     ></v-card>
                                                 </v-col>
                                             </v-row>
@@ -436,7 +436,7 @@ import foto21 from "@/../img/foto21.jpg"
 import foto24 from '@/../img/foto24.jpg'
 import foto28 from '@/../img/foto28.jpg'
 
-import encuentroRedis from '@/../img/Encuentro Redis.jpg'
+import img7_1 from '@/../img/7_1.jpg'
 import PageLayout from '@/Layouts/PageLayout'
 
 export default {
@@ -449,7 +449,7 @@ export default {
             foto24: foto24,
             foto28: foto28,
             img3: img3,
-            encuentroRedis: encuentroRedis,
+            img7_1: img7_1,
             items: ["Marketing", "Coaching", "Asesorías", "Investigación "],
             tabs: null,
             text:
