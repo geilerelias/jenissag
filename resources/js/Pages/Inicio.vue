@@ -25,7 +25,7 @@
                             style="height: 80vh;"
                         >
                             <v-col cols="12">
-                                <v-row no-gutters style="height: 100px;">
+                                <v-row no-gutters style="height: 100px;" class="animate__animated animate__slideInLeft">
                                     <v-col
                                         cols="12"
                                         align-self="start"
@@ -178,7 +178,6 @@
             </v-card>
         </v-layout>
 
-
         <v-container class="flex sm8 offset-sm2">
             <v-container
                 fluid
@@ -200,7 +199,7 @@
                                         class="pricing-header px-3  pt-md-5 pb-0  mx-auto text-center"
                                     >
                                         <div
-                                            class="base-section-heading text-center mb-0"
+                                            class="base-section-heading text-center mb-0 animate__animated:hover animate__zoomIn"
                                         >
                                             <div class="d-inline-flex mb-4">
                                                 <v-avatar
@@ -239,37 +238,36 @@
                                             :key="index"
                                         >
                                             <v-card class="mx-auto">
-                                                <div class="images" v-viewer>
-                                                    <img :aspect-ratio="10 / 8" :src="
-                                                        `/storage/${notice.image}`
-                                                    ">
-                                                </div>
-                                                <v-img
-                                                    :contain="index == 0"
-                                                    :aspect-ratio="10 / 8"
-                                                    class="white--text"
-                                                    :src="
-                                                        `/storage/${notice.image}`
-                                                    "
-                                                    :max-height="
-                                                        $vuetify.breakpoint
-                                                            .smAndDown
-                                                            ? 'auto'
-                                                            : '500px'
-                                                    "
+                                                <v-hover
+                                                    v-slot="{ hover }"
+                                                    open-delay="200"
                                                 >
-                                                    <v-card-title
-                                                        class="align-end fill-height"
-                                                    >
-                                                        <p
-                                                            style="border-radius: 10px;background-color:rgba(10, 10, 10, 0.38);"
-                                                            class="text-uppercase text-break pa-2 mb-0 rounded body-1 body-1"
+                                                    <v-card color="transparent"
+                                                            :elevation="hover ? 16 : 0"
+                                                            flat
+                                                            class="ma-0 pa-0 transparent"
+                                                            @click="showImage(`/storage/${notice.image}`)">
+                                                        <v-img
+                                                            :contain="index == 0"
+                                                            :aspect-ratio="10 / 8"
+                                                            class="white--text ma-0"
+                                                            :class="hover ? 'zoom' : ''"
+                                                            :src="`/storage/${notice.image}`"
+                                                            :max-height="$vuetify.breakpoint.smAndDown? 'auto': '500px'"
                                                         >
-                                                            {{ notice.title }}
-                                                        </p>
-                                                    </v-card-title>
-                                                </v-img>
-
+                                                            <v-card-title
+                                                                class="align-end fill-height"
+                                                            >
+                                                                <p
+                                                                    style="border-radius: 10px;background-color:rgba(10, 10, 10, 0.38);"
+                                                                    class="text-uppercase text-break pa-2 mb-0 rounded body-1 body-1"
+                                                                >
+                                                                    {{ notice.title }}
+                                                                </p>
+                                                            </v-card-title>
+                                                        </v-img>
+                                                    </v-card>
+                                                </v-hover>
                                                 <v-card-text>
                                                     <span
                                                     >{{ notice.city }} -
@@ -368,80 +366,10 @@
             </v-container>
         </v-container>
 
-        <v-row justify="center">
-            <v-expand-transition>
-                <v-overlay
-                    :value="dialog"
-                    :opacity=".8"
-                    transition="scale-transition"
-                >
-                    <v-card flat color="transparent"
-                            style="height: calc(90vh - 10px);max-height: calc(90vh - 10px);width: calc(90vw - 10px);max-width: calc(90vw - 10px)">
-                        <v-fab-transition>
-                            <v-btn
-                                dark
-                                absolute
-                                top
-                                right
-                                fab
-                                small
-                                class="mt-5"
-                                @click="dialog=false"
-                            >
-                                <v-icon>mdi-close</v-icon>
-                            </v-btn>
-                        </v-fab-transition>
-                        <v-img src="https://picsum.photos/510/300?random"
-                               style="height: calc(90vh - 10px);max-height: calc(90vh - 10px);z-index: 0 !important;"
-                               aspect-ratio="2"
-                               :style="getRotateStyle"
-                               contain>
-                            <template v-slot:placeholder>
-                                <v-row
-                                    class="fill-height ma-0"
-                                    align="center"
-                                    justify="center"
-                                >
-                                    <v-progress-circular
-                                        indeterminate
-                                        color="grey lighten-5"
-                                    ></v-progress-circular>
-                                </v-row>
-                            </template>
-                        </v-img>
-                        <div class="mt-n8 d-flex justify-center align-end" style="z-index: 100 !important;">
-                            <v-row class="primary rounded-lg mb-2 py-0 " style="max-width: 200px">
-                                <v-col class="d-flex justify-center align-end my-0">
-                                    <v-btn icon @click="setRotation(-90)">
-                                        <v-icon olor="white">
-                                            mdi-arrow-left
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn icon @click="resetRotation(90)">
-                                        <v-icon>
-                                            mdi-backup-restore
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn icon @click="setRotation(90)">
-                                        <v-icon color="white">
-                                            mdi-arrow-right
-                                        </v-icon>
-                                    </v-btn>
-                                </v-col>
-                            </v-row>
-                        </div>
-                    </v-card>
-                </v-overlay>
-            </v-expand-transition>
-        </v-row>
-        <v-row>
-            <v-col>
-                <v-dialog>
+        <preview-image :dialog="dialog"
+                       :close="closeDialog"
+                       :selected-image="selectedImage"/>
 
-                </v-dialog>
-            </v-col>
-        </v-row>
-        <v-btn @click="dialog=!dialog">example</v-btn>
     </page-layout>
 </template>
 
@@ -452,18 +380,17 @@ import personaLeyendo from '@/../img/persona_leyendo_un_libro_con_una_taza_de_te
 
 import PageLayout from '@/Layouts/PageLayout.vue'
 import moment from "moment";
-import format from "date-fns/format";
+import PreviewImage from "@/components/PreviewImage";
 
 
 moment.locale("es");
-import mapState from "vuex";
 
 export default {
     components: {
+        PreviewImage,
         PageLayout,
     },
     data: () => ({
-        images: ['/src/null/null/null/1.jpg', '/src/null/null/null/2.jpg'],
         loading: true,
         loaded: false,
         lazzy: lazzy,
@@ -494,13 +421,12 @@ export default {
         bgColor: "transparent",
         fab: false,
         flat: true,
-
         dialog: false,
         notifications: false,
         sound: true,
         widgets: false,
-        rotateStyle: '',
-        grade: 0
+        selectedImage: ''
+
     }),
     created() {
         const readyHandler = () => {
@@ -518,21 +444,18 @@ export default {
     mounted() {
         this.initialize();
     },
-    computed: {
-        getRotateStyle() {
-            console.log('this is getRotateStyle')
-            return this.rotateStyle;
-        }
-    },
+
     methods: {
-        resetRotation() {
-            this.rotateStyle = "transform: rotate(0deg)";
+        showImage(image) {
+            this.selectedImage = image
+            this.dialog = true
+            console.log('show image dialog', this.dialog, this.getDialog)
         },
-        setRotation(value) {
-            this.grade = this.grade + value
-            console.log('this is rotate')
-            this.rotateStyle = "transform: rotate(" + this.grade + "deg)";
+
+        closeDialog() {
+            this.dialog = false
         },
+
         inited(viewer) {
             this.$viewer = viewer
         },
@@ -591,6 +514,15 @@ export default {
 </script>
 
 <style>
+/*zoom en imagenes*/
+.v-image .v-image__image {
+    transition: all 0.6s;
+}
+
+.v-image.zoom .v-image__image {
+    transform: scale(1.2);
+}
+
 strong {
     font-weight: bold !important;
 }

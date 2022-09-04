@@ -56,14 +56,27 @@
                             class="col-md-4   col-12"
                             :class="i % 2 ? 'order-md-2' : ''"
                         >
-                            <v-card>
+                            <v-card @click="showImage(`/storage/${item.image}`)">
                                 <v-img
-                                    aspect-ratio="1"
+                                    cover
+                                    :aspect-ratio="16/9"
                                     elevation="12"
                                     :src="`/storage/${item.image}`"
-                                    lazy-src="https://i.picsum.photos/id/300/10/6.jpg"
-                                    style="max-height: 250px;  height: 250px;"
-                                ></v-img>
+                                    style="max-height: 300px;  height: 300px;"
+                                >
+                                    <template v-slot:placeholder>
+                                        <v-row
+                                            class="fill-height ma-0"
+                                            align="center"
+                                            justify="center"
+                                        >
+                                            <v-progress-circular
+                                                indeterminate
+                                                color="primary lighten-5"
+                                            ></v-progress-circular>
+                                        </v-row>
+                                    </template>
+                                </v-img>
                             </v-card>
                         </v-col>
                         <v-col class="px-0 col-md-8 col-12">
@@ -141,6 +154,10 @@
                 </v-container>
             </v-main>
         </section>
+
+        <preview-image :dialog="dialog"
+                       :close="closeDialog"
+                       :selected-image="selectedImage"/>
     </page-layout>
 </template>
 
@@ -148,11 +165,14 @@
 import img5 from '@/../img/quien-soy.jpg';
 import img17 from '@/../img/17.jpg';
 import PageLayout from '@/Layouts/PageLayout'
+import PreviewImage from "@/components/PreviewImage";
+
 
 export default {
     name: "QuienSoy",
     components: {
         PageLayout,
+        PreviewImage
     },
     data: () => ({
         img5: img5,
@@ -161,9 +181,20 @@ export default {
         items: null,
         tab: null,
         centered: false,
-        width: window.innerWidth
+        width: window.innerWidth,
+        selectedImage: '',
+        dialog: false
     }),
     methods: {
+        showImage(image) {
+            this.selectedImage = image
+            this.dialog = true
+            console.log('show image dialog', this.dialog, this.getDialog)
+        },
+
+        closeDialog() {
+            this.dialog = false
+        },
         getHeig() {
             return document.documentElement.clientHeight - 50;
         },

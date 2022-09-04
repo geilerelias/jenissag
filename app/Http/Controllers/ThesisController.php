@@ -13,6 +13,13 @@ class ThesisController extends Controller
         abort(401, 'This action is unauthorized');
     }
 
+    public function all()
+    {
+        return Thesis::orderBy('id', 'DESC')->get();
+        abort(401, 'This action is unauthorized');
+    }
+    
+
     /**
      * Show the form for creating a new resource.
      *

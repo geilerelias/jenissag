@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Software;
+use App\Models\Business;
 use Illuminate\Http\Request;
 
-class SoftwareController extends Controller
+class BusinessController extends Controller
 {
-
+    //
     public function index(Request $request)
     {
-        return Software::orderBy('id', 'DESC')->get();
+        return Business::orderBy('id', 'DESC')->get();
         abort(401, 'This action is unauthorized');
     }
 
     public function all()
     {
-        return Software::orderBy('id', 'DESC')->get();
+        return Business::orderBy('id', 'DESC')->get();
         abort(401, 'This action is unauthorized');
     }
 
@@ -46,16 +46,16 @@ class SoftwareController extends Controller
             "entity" => 'required',
         ]);
 
-        $software = new Software();
-        $software->title = $request->title;
-        $software->description = $request->description;
-        $software->year = $request->year;
-        $software->state = $request->state;
-        $software->entity = $request->entity;
+        $business = new Business();
+        $business->title = $request->title;
+        $business->description = $request->description;
+        $business->year = $request->year;
+        $business->state = $request->state;
+        $business->entity = $request->entity;
 
-        $software->save();
+        $business->save();
 
-        return $software;
+        return $business;
     }
 
     /**
@@ -66,8 +66,8 @@ class SoftwareController extends Controller
      */
     public function show($id)
     {
-        $software = Software::find($id);
-        return $software;
+        $business = Business::find($id);
+        return $business;
     }
 
     /**
@@ -78,8 +78,8 @@ class SoftwareController extends Controller
      */
     public function edit($id)
     {
-        $software = Software::find($id);
-        return $software;
+        $business = Business::find($id);
+        return $business;
     }
 
     /**
@@ -99,16 +99,16 @@ class SoftwareController extends Controller
             "entity" => 'required',
         ]);
 
-        $software = Software::find($id);
+        $business = Business::find($id);
 
-        $software->title = $request->title;
-        $software->description = $request->description;
-        $software->year = $request->year;
-        $software->state = $request->state;
-        $software->entity = $request->entity;
+        $business->title = $request->title;
+        $business->description = $request->description;
+        $business->year = $request->year;
+        $business->state = $request->state;
+        $business->entity = $request->entity;
 
-        $software->save();
-        return $software;
+        $business->save();
+        return $business;
     }
 
     /**
@@ -119,7 +119,7 @@ class SoftwareController extends Controller
      */
     public function destroy($id)
     {
-        $software = Software::find($id);
-        $software->delete();
+        $business = Business::find($id);
+        $business->delete();
     }
 }

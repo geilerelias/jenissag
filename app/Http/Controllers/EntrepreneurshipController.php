@@ -10,9 +10,13 @@ class EntrepreneurshipController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            return Entrepreneurship::orderBy('id', 'DESC')->get();
-        }
+        return Entrepreneurship::orderBy('id', 'DESC')->get();
+        abort(401, 'This action is unauthorized');
+    }
+
+    public function all()
+    {
+        return Entrepreneurship::orderBy('id', 'DESC')->get();
         abort(401, 'This action is unauthorized');
     }
 

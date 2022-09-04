@@ -4,7 +4,7 @@ import ('moment');
 
 import Vue from 'vue';
 
-import '@mdi/font/css/materialdesignicons.css'
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 import vuetify from '../plugins/vuetify.js'
 
 import {InertiaApp} from '@inertiajs/inertia-vue';
@@ -14,9 +14,6 @@ import PortalVue from 'portal-vue';
 import {InertiaProgress} from '@inertiajs/progress'
 import store from "./store.js";
 
-import VAnimateCss from 'v-animate-css';
-
-Vue.use(VAnimateCss);
 
 Vue.mixin({methods: {route}});
 Vue.use(InertiaApp);
@@ -47,14 +44,21 @@ import Vue2Editor from "vue2-editor";
 
 Vue.use(Vue2Editor);
 
+//Vue Animate CSS
+import VAnimateCss from 'v-animate-css';
+import 'animate.css';
+
+Vue.use(VAnimateCss);
+
 
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
+
 Vue.use(Viewer)
 
 import axios from 'axios'
-window.axios = require('axios');
 
+window.axios = require('axios');
 
 const app = document.getElementById('app');
 

@@ -197,14 +197,17 @@ export default {
 
         deleteItem(item) {
             const index = this.othersArticles.indexOf(item);
+
+
             this.$swal({
                 title: "Estás seguro?",
                 html: `Eliminar <b>${item.title}</b>, No podrás revertir esto!`,
-                type: "warning",
+                icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#424242",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Si, Eliminar!"
+                confirmButtonText: "Si, Eliminar!",
+
             }).then(result => {
                 console.log("item.id", item.id);
 
@@ -212,7 +215,7 @@ export default {
                     axios
                         .delete(`/articles/others/${item.id}`)
                         .then(response => {
-                            Swal.fire(
+                            this.$swal(
                                 "Eliminado!",
                                 "Eliminado correctamente.",
                                 "success"

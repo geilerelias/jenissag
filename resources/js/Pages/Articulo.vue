@@ -200,6 +200,8 @@
             transition="dialog-bottom-transition"
         >
             <view-pdf @close="onClose" :url="url"></view-pdf>
+
+            <div class="pdf-container"></div>
         </v-dialog>
     </page-layout>
 </template>

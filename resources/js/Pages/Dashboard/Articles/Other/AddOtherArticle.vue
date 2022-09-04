@@ -1,13 +1,13 @@
 <template>
     <div>
         <v-toolbar dark style="border-radius:0">
-            <v-btn icon dark @click="close()">
+            <v-btn dark icon @click="close()">
                 <v-icon>mdi-close</v-icon>
             </v-btn>
             <v-toolbar-title class="headline">Agregar nuevo articulo</v-toolbar-title>
             <div class="flex-grow-1"></div>
             <v-toolbar-items>
-                <v-btn text :disabled="!valid" class="mr-4" @click="validate">
+                <v-btn :disabled="!valid" class="mr-4" text @click="validate">
                     Registrar
                 </v-btn>
             </v-toolbar-items>
@@ -22,11 +22,11 @@
                     enctype="multipart/form-data"
                 >
                     <v-row>
-                        <v-col cols="12" sm="6" md="4">
+                        <v-col cols="12" md="4" sm="6">
                             <v-text-field
-                                clearable
                                 v-model="editedArticle.title"
                                 :rules="titleRules"
+                                clearable
                                 label="Titulo"
                                 prepend-icon="mdi-format-title"
                                 required
@@ -34,9 +34,9 @@
                         </v-col>
                         <v-col cols="12">
                             <v-textarea
-                                clearable
                                 v-model="editedArticle.description"
                                 :rules="descriptionRules"
+                                clearable
                                 label="Descripción"
                                 prepend-icon="mdi-text"
                             ></v-textarea>
@@ -44,7 +44,8 @@
                         <v-col cols="12">
                             <v-file-input
                                 ref="file"
-                                v-model="file"
+                                v-model="editedArticle.file"
+                                :change="onChange(file)"
                                 :rules="fileRules"
                                 accept=".pdf"
                                 label="Seleccione un archivo"
@@ -58,16 +59,16 @@
 
         <v-card-actions>
             <div class="flex-grow-1 "></div>
-            <v-btn color="warning " class="mr-4 " @click="close">
+            <v-btn class="mr-4 " color="warning " @click="close">
                 Cancelar
             </v-btn>
-            <v-btn color="error " class="mr-4 " @click="reset">
+            <v-btn class="mr-4 " color="error " @click="reset">
                 Reiniciar
             </v-btn>
             <v-btn
                 :disabled="!valid"
-                color="success "
                 class="mr-4 "
+                color="success "
                 @click="save"
             >
                 Guardar
@@ -114,63 +115,18 @@ export default {
             }
         };
     },
-    computed: {
-        doubleScore() {
-            return this.score * 2;
-        }
-    },
+
     methods: {
-        onLoad() {
-            this.loaded = true;
-            console.log("lo hace");
-        }
-        ,
         Change() {
             let reader = new FileReader();
             reader.onload = () => {
                 this.fileUrl = reader.result;
             };
             console.log(reader.readAsDataURL(this.editedArticle.file));
-        }
-        ,
-        onUpload() {
-            const fr = new FileReader();
-            console.log(this.editedIndex);
-
-            if (this.editedIndex > 0 && this.file === null) {
-                console.log("soy mayor");
-                console.log("edit file: ", this.editedArticle.file);
-
-                this.viewDocument = true;
-                this.src = pdf.createLoadingTask(
-                    "/pdf/" + this.editedArticle.file
-                );
-                this.src.then(pdf => {
-                    this.numPages = pdf.numPages;
-                });
-            } else if (this.file !== null) {
-                this.viewDocument = true;
-                fr.readAsDataURL(this.file);
-                fr.addEventListener("load", () => {
-                    this.src = pdf.createLoadingTask(fr.result);
-                    this.src.then(pdf => {
-                        this.numPages = pdf.numPages;
-                    });
-                });
-            } else {
-                Swal.fire(
-                    "Archivo vacío!",
-                    "No has elegido ningún archivo.",
-                    "error"
-                );
-            }
-        }
-        ,
+        },
         error: function (err) {
             console.log(err);
-        }
-        ,
-
+        },
         save() {
             if (this.validate()) {
                 if (this.editedIndex > -1) {
@@ -178,10 +134,7 @@ export default {
                 } else {
                     let formData = new FormData();
                     formData.append("title", this.editedArticle.title);
-                    formData.append(
-                        "description",
-                        this.editedArticle.description
-                    );
+                    formData.append("description", this.editedArticle.description);
                     formData.append("file", this.editedArticle.file);
                     console.log(formData);
                     axios
@@ -193,7 +146,7 @@ export default {
                                 othersArticleServidor
                             );
 
-                            Swal.fire(
+                            this.$swal(
                                 "Buen trabajo! 😃",
                                 "Registro Exitoso! ",
                                 "success"
@@ -205,14 +158,13 @@ export default {
                     this.close();
                 }
             } else {
-                Swal.fire({
+                this.$swal({
                     type: "error",
                     title: "Oops...",
                     text: "Campos no validados!"
                 });
             }
-        }
-        ,
+        },
         edit() {
             const params = this.editedArticle;
             const index = this.editedIndex;
@@ -226,7 +178,7 @@ export default {
                 .then(res => {
                     this.$emit("updateArrayOfOthersArticles", params);
 
-                    Swal.fire(
+                    this.$swal(
                         "Buen trabajo!",
                         "Editado correctamente!",
                         "success"
@@ -234,7 +186,7 @@ export default {
                     this.close();
                 })
                 .catch(error => {
-                    Swal.fire({
+                    this.$swal({
                         type: "error",
                         title: "Oops...",
                         text: "Algo salió mal!"
@@ -248,16 +200,13 @@ export default {
             }
             console.log("fallo la validación");
             return false;
-        }
-        ,
+        },
         reset() {
             this.$refs.form.reset();
-        }
-        ,
+        },
         resetValidation() {
             this.$refs.form.resetValidation();
-        }
-        ,
+        },
         close() {
             this.$emit("closeDialog", false);
             // this.restoreDefault();
@@ -273,6 +222,10 @@ export default {
                 //this.editedIndex = -1;
                 this.reset();
             }, 300);
+        },
+
+        onChange(file) {
+            console.log("Se presento un cambio file", file);
         }
     }
 }

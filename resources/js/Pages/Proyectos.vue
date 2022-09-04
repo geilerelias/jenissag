@@ -54,7 +54,7 @@
                                 grow
                             >
                                 <v-tab v-for="item in items" :key="item">{{
-                                    item
+                                        item
                                     }}
                                 </v-tab>
                             </v-tabs>
@@ -77,7 +77,7 @@
                                                 <v-list-item-avatar
                                                     color="grey"
                                                 >{{
-                                                    index + 1
+                                                        index + 1
                                                     }}
                                                 </v-list-item-avatar
                                                 >
@@ -85,7 +85,7 @@
                                                     <v-list-item-title
                                                         class="title"
                                                     >{{
-                                                        item.title
+                                                            item.title
                                                         }}
                                                     </v-list-item-title
                                                     >
@@ -98,7 +98,7 @@
                                                     <v-list-item-content
                                                     >Estado actual:
                                                         {{
-                                                        item.state
+                                                            item.state
                                                         }}.
                                                     </v-list-item-content
                                                     >
@@ -126,7 +126,7 @@
                                                     color="grey"
                                                     class="mt-6"
                                                 >{{
-                                                    index + 1
+                                                        index + 1
                                                     }}
                                                 </v-list-item-avatar
                                                 >
@@ -134,7 +134,7 @@
                                                     <v-list-item-content
                                                         class="body-1"
                                                     >{{
-                                                        item.title
+                                                            item.title
                                                         }}
                                                     </v-list-item-content
                                                     >
@@ -176,7 +176,7 @@
                                                 <v-list-item-avatar
                                                     color="grey"
                                                 >{{
-                                                    index + 1
+                                                        index + 1
                                                     }}
                                                 </v-list-item-avatar
                                                 >
@@ -184,7 +184,7 @@
                                                     <v-list-item-content
                                                         class="body-1"
                                                     >{{
-                                                        item.title
+                                                            item.title
                                                         }}
                                                     </v-list-item-content
                                                     >
@@ -199,10 +199,10 @@
                                                     >Estado:
                                                         {{ item.state }}.
                                                         Empresa patrocinadora:{{
-                                                        item.entity
+                                                            item.entity
                                                         }}
                                                         {{
-                                                        item.year
+                                                            item.year
                                                         }}.
                                                     </v-list-item-content
                                                     >
@@ -238,7 +238,7 @@
                                                     color="grey"
                                                     class="mt-7"
                                                 >{{
-                                                    index + 1
+                                                        index + 1
                                                     }}
                                                 </v-list-item-avatar
                                                 >
@@ -249,19 +249,19 @@
                                                         {{ item.title }}
                                                     </v-list-item-content>
                                                     <v-list-item-subtitle>{{
-                                                        item.entity
+                                                            item.entity
                                                         }}
                                                     </v-list-item-subtitle>
                                                     <v-list-item-subtitle
                                                         v-if="item.People != ''"
                                                     >Personas orientadas:
                                                         {{
-                                                        item.People
+                                                            item.People
                                                         }}
                                                     </v-list-item-subtitle
                                                     >
                                                     <v-list-item-subtitle>{{
-                                                        item.year
+                                                            item.year
                                                         }}
                                                     </v-list-item-subtitle>
                                                 </v-list-item-content>
@@ -296,7 +296,7 @@
                                                     color="grey"
                                                     class="mt-8"
                                                 >{{
-                                                    index + 1
+                                                        index + 1
                                                     }}
                                                 </v-list-item-avatar
                                                 >
@@ -304,7 +304,7 @@
                                                     <v-list-item-content
                                                         class="body-1"
                                                     >{{
-                                                        item.title
+                                                            item.title
                                                         }}
                                                     </v-list-item-content
                                                     >
@@ -347,7 +347,7 @@ export default {
         PageLayout,
     },
     data: () => ({
-        img11:img11,
+        img11: img11,
         tab: null,
         items: [
             "Emprendimientos",
@@ -367,11 +367,16 @@ export default {
     },
     methods: {
         initilize() {
-            this.loadEntrepreneurship();
-            this.loadSoftwares();
-            this.loadBusiness();
-            this.loadThesis();
-            this.loadJury();
+            try {
+                this.loadEntrepreneurship();
+                this.loadSoftwares();
+                this.loadBusiness();
+                this.loadThesis();
+                this.loadJury();
+            } catch (e) {
+                console.log(e)
+            }
+
         },
 
         loadEntrepreneurship() {
@@ -399,7 +404,7 @@ export default {
                 }
             ];
 
-            this.axios
+            axios
                 .get("/entrepreneurship/all")
                 .then(res => {
                     this.entrepreneurship = this.entrepreneurship.concat(
@@ -442,7 +447,7 @@ export default {
                     year: "2012"
                 }
             ];
-            this.axios
+            axios
                 .get("/software/all")
                 .then(res => {
                     this.softwares = this.softwares.concat(res.data);
@@ -474,7 +479,7 @@ export default {
                     year: "2011"
                 }
             ];
-            this.axios
+            axios
                 .get("/business/all")
                 .then(res => {
                     this.business = this.business.concat(res.data);
@@ -562,8 +567,8 @@ export default {
                         "Josías Elisad Ibarra Paternostro y José de la Cruz Pertuz Mena"
                 }
             ];
-            this.axios
-                .get("/api/thesis/all")
+            axios
+                .get("/thesis/all")
                 .then(res => {
                     this.thesis = this.thesis.concat(res.data);
                 })
@@ -616,8 +621,8 @@ export default {
                     people: "Jesús David Romero Torregrosa."
                 }
             ];
-            this.axios
-                .get("/api/jury/all")
+            axios
+                .get("/jury/all")
                 .then(res => {
                     this.jurys = this.jurys.concat(res.data);
                 })

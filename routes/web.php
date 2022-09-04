@@ -124,7 +124,7 @@ Route::middleware(['auth:sanctum', 'verified', 'can:view articles'])->group(func
 
 Route::get('/entrepreneurship/all', [EntrepreneurshipController::class, 'all']);
 Route::get('/software/all', [SoftwareController::class, 'all']);
-Route::get('/business/all', [BusinessController::class, 'index']);
+Route::get('/business/all', [BusinessController::class, 'all']);
 Route::get('/thesis/all', [ThesisController::class, 'all']);
 Route::get('/jury/all', [JuryController::class, 'all']);
 Route::middleware(['auth:sanctum', 'verified', 'can:view project'])->group(function () {
@@ -203,7 +203,6 @@ Route::get('storage/{folder}/{filename}', function ($folder, $filename) {
         return $th->getMessage();
     }
 });
-
 
 
 Route::get('/src/{page?}/{folder?}/{sub?}/{filename}', function ($page = "null", $folder = "null", $sub = "null", $filename) {

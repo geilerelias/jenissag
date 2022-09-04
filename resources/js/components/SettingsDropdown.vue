@@ -59,6 +59,7 @@
                             </inertia-link>
                         </v-list-item-group>
                     </div>
+                    
                     <v-subheader>Opciones de configuración</v-subheader>
                     <v-list-item-group
                         color="primary"
