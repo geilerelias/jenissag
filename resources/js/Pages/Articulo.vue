@@ -149,6 +149,7 @@
                                                             </v-list-item-title>
                                                         </v-list-item-content>
                                                     </v-list-item>
+                                                    
                                                     <pdf
                                                         :src="
                                                             '/storage/' +
@@ -162,6 +163,7 @@
                                                         "
                                                         height="194"
                                                     ></pdf>
+                                                    
                                                     <v-card-text>
                                                         {{ item.description }}
                                                     </v-card-text>
@@ -269,8 +271,8 @@ export default {
                         "SERVICIO NACIONAL DE APRENDIZAJE “SENA”. Vol.1. p.81-88. 2018.",
                     description:
                         "Socializado en el III SIMPOSIO DE INVESTIGACIÓN, INNOVACIÓN Y DESARROLLO TECNOLÓGICO. VALLEDUPAR, COLOMBIA. 2018.",
-                    link:
-                        "http://eventossinndetec.com/#/revista/inndecomm/actual"
+                    link:"http://eventossinndetec.com/#/revista/inndecomm/actual",
+                    file:'published-articles/MemoriasIISimposio.pdf'
                 },
                 {
                     year: "2018-01",
@@ -293,7 +295,8 @@ export default {
                         "SERVICIO NACIONAL DE APRENDIZAJE SENA , v. , p.36 - 40  1 ,2017",
                     description:
                         "Socializado en el II SIMPOSIO DE INVESTIGACIÓN, INNOVACIÓN Y DESARROLLO TECNOLÓGICO. VALLEDUPAR, COLOMBIA. 2017.",
-                    link: "http://eventossinndetec.com/#/memorias"
+                    link: "http://eventossinndetec.com/#/memorias",    
+                    file:'published-articles/MemoriasIISimposio.pdf'
                 },
                 {
                     year: "2017-04",
@@ -305,7 +308,8 @@ export default {
                         "SERVICIO NACIONAL DE APRENDIZAJE SENA, v. , p.82 - 88  ,2017",
                     description:
                         "Socializado en el II SIMPOSIO DE INVESTIGACIÓN, INNOVACIÓN Y DESARROLLO TECNOLÓGICO. VALLEDUPAR, COLOMBIA. 2017.",
-                    link: "http://eventossinndetec.com/#/memorias"
+                    link: "http://eventossinndetec.com/#/memorias",
+                    file:'published-articles/MemoriasIISimposio.pdf'
                 }
             ];
             axios
